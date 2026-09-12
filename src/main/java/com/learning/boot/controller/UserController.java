@@ -1,5 +1,6 @@
 package com.learning.boot.controller;
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +35,7 @@ public class UserController {
 	}
 	
 	@GetMapping("/getAllUsers")
-	public Map<Integer, User> getAllUsers(){
+	public List<User> getAllUsers(){
 		System.out.println("UserController.getAllUsers()");
 		return userService.getAllUsers();
 	}
