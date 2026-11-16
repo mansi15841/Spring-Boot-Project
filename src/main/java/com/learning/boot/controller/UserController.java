@@ -1,41 +1,54 @@
 package com.learning.boot.controller;
 
-import java.util.Map;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.learning.boot.entity.User;
 import com.learning.boot.Service.UserService;
-import com.learning.boot.model.User;
 
-@RestController // == @Controller @ResponseBody 
+
+@Controller
 public class UserController {
 	
 	@Autowired
 	private UserService userService;
 	
 	public UserController(UserService userService) {
-		this.userService = userService ;
+		// TODO Auto-generated constructor stub
+		this.userService = userService;
 	}
-	
+
 	@GetMapping("/")
 	public String helloUser() {
 		System.out.println("UserController.helloUser()");
-		return "Hello it's a spring boot rest api project";
+		return "welcome";
 	}
 	
 	@PostMapping
+	@ResponseBody
 	public User saveUser(@RequestBody User user) {
-		System.out.println("UserController.saveUser()");
-		return userService.saveUser(user);
+		userService.saveUser(user);
+		return user;
 	}
 	
 	@GetMapping("/getAllUsers")
-	public Map<Integer, User> getAllUsers(){
-		System.out.println("UserController.getAllUsers()");
+	@ResponseBody
+	public List<User> getAllUsers(){
 		return userService.getAllUsers();
 	}
+	
+	@GetMapping("/getUser/{id}")
+	@ResponseBody
+	public User getUser(@PathVariable int id) {
+		System.out.println("UserController.getUser()");
+		return userService.getUserById(id);
+	}
+	
 }
